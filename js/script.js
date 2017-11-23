@@ -42,7 +42,7 @@ function animate() {
 
 animate();
 
-var spinspeed = 0.05;
+var spinspeed = 0.00;
 
 function increasespeed(){
 	spinspeed+=0.05;
