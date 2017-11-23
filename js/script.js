@@ -6,12 +6,11 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.setClearColor (0xffffff, 1);
 document.body.appendChild( renderer.domElement );
 
-// var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-// var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-// var cube = new THREE.Mesh( geometry, material );
-// scene.add( cube );
-var objectLoader = new THREE.ObjectLoader();
+var controls = new THREE.OrbitControls( camera );
+
 var spinner = null;
+
+var objectLoader = new THREE.ObjectLoader();
 objectLoader.setCrossOrigin("");
 objectLoader.load("assets/FidgetSpinner.json", function ( obj ) {
 spinner = obj;
@@ -21,6 +20,28 @@ scene.add( obj );
 
 
 camera.position.z = 5;
+controls.autoRotate = true;
+controls.rotateSpeed = 2.0;
+
+
+
+function animate() {
+	requestAnimationFrame( animate );
+	if(spinner)
+	{
+		spinner.rotation.y += spinspeed;
+
+
+		controls.update();
+
+  		renderer.render( scene, camera );
+	}
+	renderer.render( scene, camera );
+}
+
+
+animate();
+
 var spinspeed = 0.05;
 
 function increasespeed(){
@@ -29,16 +50,3 @@ function increasespeed(){
 function decreasespeed(){
 	spinspeed-=0.05;
 }
-
-function animate() {
-	requestAnimationFrame( animate );
-	if(spinner)
-	{
-		// spinner.rotation.x += 0.1;
-		spinner.rotation.y += spinspeed;
-	}
-	renderer.render( scene, camera );
-}
-
-
-animate();
